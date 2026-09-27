@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Создание сайтов под ключ | 7–10 дней</title>
+  <title>Siteqlo — Создание сайтов под ключ | 7–10 дней</title>
   <meta name="description" content="Создаю современные сайты и веб-приложения за 7–10 дней. Python, HTML, CSS, JavaScript.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -907,6 +906,120 @@ button, input, textarea { font-family: inherit; }
   .section { padding: 72px 0; }
   .floating-badge { display: none; }
 }
+  
+/* Advantages */
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.adv-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 22px;
+  transition: border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.adv-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  transform: translateY(-3px);
+}
+
+.adv-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  background: rgba(139, 92, 246, 0.12);
+  border-radius: 12px;
+  color: #a78bfa;
+}
+
+.adv-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.adv-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* FAQ */
+.faq-list {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.faq-item[open] {
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.faq-item summary {
+  padding: 18px 22px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  user-select: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: '+';
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #a78bfa;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.faq-item[open] summary::after {
+  content: '−';
+}
+
+.faq-item p {
+  padding: 0 22px 18px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .advantages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -917,13 +1030,13 @@ button, input, textarea { font-family: inherit; }
     <div class="container header-inner">
       <a href="#" class="logo">
         <span class="logo-mark"></span>
-        WebCraft
+        Siteqlo
       </a>
       <nav class="nav" id="nav">
         <a href="#process">Процесс</a>
-        <a href="#stack">Стек</a>
-        <a href="#services">Услуги</a>
+        <a href="#advantages">Плюсы</a>
         <a href="#prices">Цены</a>
+        <a href="#faq">FAQ</a>
         <a href="#contact" class="nav-cta">Заказать</a>
       </nav>
       <button class="burger" id="burger" aria-label="Меню">
@@ -1047,6 +1160,47 @@ button, input, textarea { font-family: inherit; }
     </div>
   </section>
 
+
+  <section id="advantages" class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Преимущества</span>
+        <h2>Почему заказывают у меня</h2>
+        <p>Прозрачно, быстро и без сюрпризов</p>
+      </div>
+      <div class="advantages-grid">
+        <div class="adv-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Фиксированные сроки</h3>
+          <p>7–10 рабочих дней. Если задержу — скидка 20%.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.6"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Код с нуля</h3>
+          <p>Не конструктор. Чистый Python + HTML/CSS/JS. Легко поддерживать.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3>14 дней правок</h3>
+          <p>После сдачи — бесплатные правки в течение двух недель.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Связь каждый день</h3>
+          <p>Отвечаю в Telegram в течение нескольких часов. Без пропаж.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="stack" class="section section-alt">
     <div class="container">
       <div class="section-head">
@@ -1144,7 +1298,7 @@ button, input, textarea { font-family: inherit; }
       <div class="pricing-grid">
         <div class="price-card">
           <div class="price-tier">Лендинг</div>
-          <div class="price-amount">от <strong>25 000</strong> ₽</div>
+          <div class="price-amount">от <strong>8 000</strong> ₽</div>
           <ul class="price-features">
             <li>1–5 блоков</li>
             <li>Адаптивная вёрстка</li>
@@ -1157,7 +1311,7 @@ button, input, textarea { font-family: inherit; }
         <div class="price-card price-featured">
           <div class="price-popular">Частый выбор</div>
           <div class="price-tier">Корпоративный</div>
-          <div class="price-amount">от <strong>45 000</strong> ₽</div>
+          <div class="price-amount">от <strong>14 000</strong> ₽</div>
           <ul class="price-features">
             <li>До 8 страниц</li>
             <li>Админка / CMS</li>
@@ -1169,7 +1323,7 @@ button, input, textarea { font-family: inherit; }
 
         <div class="price-card">
           <div class="price-tier">Веб-сервис</div>
-          <div class="price-amount">от <strong>70 000</strong> ₽</div>
+          <div class="price-amount">от <strong>20 000</strong> ₽</div>
           <ul class="price-features">
             <li>Кастомная логика</li>
             <li>База данных</li>
@@ -1182,6 +1336,43 @@ button, input, textarea { font-family: inherit; }
     </div>
   </section>
 
+
+  <section id="faq" class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">FAQ</span>
+        <h2>Частые вопросы</h2>
+        <p>Коротко и по делу</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Сколько правок входит в стоимость?</summary>
+          <p>В течение 14 дней после сдачи — любые правки по согласованному ТЗ бесплатно. Крупные новые функции обсуждаем отдельно.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Как происходит оплата?</summary>
+          <p>50% предоплата для старта, 50% после сдачи и проверки. Работаю по договору или простой расписке — как удобнее.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Можно ли потом самому править сайт?</summary>
+          <p>Да. Передаю весь код и доступы. Если нужна админка — делаю простую панель, чтобы менять тексты и картинки без программиста.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Что если нужно срочно?</summary>
+          <p>Могу ускорить до 5–7 дней за доплату 20–30%. Обсуждаем индивидуально.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Вы делаете на Tilda / WordPress?</summary>
+          <p>Нет. Только свой код на Python + HTML/CSS/JS. Это быстрее работает, лучше для SEO и проще развивать дальше.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Что входит в «под ключ»?</summary>
+          <p>Дизайн, вёрстка, логика, формы, адаптив, базовое SEO, деплой на хостинг и инструкция. Домен и хостинг помогаю подключить.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <section id="contact" class="section">
     <div class="container">
       <div class="contact-wrap">
@@ -1190,13 +1381,13 @@ button, input, textarea { font-family: inherit; }
           <h2>Обсудим проект</h2>
           <p>Напишите задачу — отвечу в течение дня, уточню детали и назову точные сроки и стоимость.</p>
           <div class="contact-channels">
-            <a href="https://t.me/your_username" class="channel" target="_blank" rel="noopener">
+            <a href="https://t.me/Siteqlo" class="channel" target="_blank" rel="noopener">
               <div class="channel-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <div>
                 <strong>Telegram</strong>
-                <span>@your_username</span>
+                <span>@Siteqlo</span>
               </div>
             </a>
             <a href="mailto:hello@example.com" class="channel">
@@ -1237,10 +1428,10 @@ button, input, textarea { font-family: inherit; }
     <div class="container footer-inner">
       <div class="footer-brand">
         <span class="logo-mark"></span>
-        WebCraft
+        Siteqlo
       </div>
       <p>Создание сайтов и веб-приложений · 7–10 дней</p>
-      <p class="copyright">© 2025 WebCraft</p>
+      <p class="copyright">© 2025 Siteqlo</p>
     </div>
   </footer>
 
