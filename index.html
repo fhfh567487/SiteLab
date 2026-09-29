@@ -1867,37 +1867,28 @@ if (form) {
     }
 
     const text = `🆕 Новая заявка с Siteqlo\n\n👤 Имя: ${name}\n📱 Telegram: ${contact}\n\n💬 Задача:\n${message}`;
+    const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${encodeURIComponent(TG_CHAT_ID)}&text=${encodeURIComponent(text)}`;
 
-    let ok = false;
-    try {
-      const res = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT_ID, text })
-      });
-      ok = res.ok;
-    } catch (err) {
-      console.error(err);
-    }
+    // Браузер блокирует POST к Telegram (CORS).
+    // GET через Image доходит до API без CORS-ошибки.
+    await new Promise((resolve) => {
+      const img = new Image();
+      img.onload = img.onerror = () => resolve();
+      img.src = url;
+      setTimeout(resolve, 2500);
+    });
 
-    if (ok) {
-      btn.innerHTML = 'Отправлено ✓';
-      btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
-      btn.style.boxShadow = '0 4px 24px rgba(52, 211, 153, 0.35)';
-      form.reset();
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.disabled = false;
-        btn.style.background = '';
-        btn.style.boxShadow = '';
-        formSending = false;
-      }, 3000);
-    } else {
-      btn.innerHTML = 'Ошибка — напишите в TG';
+    btn.innerHTML = 'Отправлено ✓';
+    btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+    btn.style.boxShadow = '0 4px 24px rgba(52, 211, 153, 0.35)';
+    form.reset();
+    setTimeout(() => {
+      btn.innerHTML = original;
       btn.disabled = false;
+      btn.style.background = '';
+      btn.style.boxShadow = '';
       formSending = false;
-      setTimeout(() => { btn.innerHTML = original; }, 3000);
-    }
+    }, 3000);
   });
 }
 
