@@ -1782,15 +1782,7 @@ button, input, textarea { font-family: inherit; }
                 <span>@Siteqlo</span>
               </div>
             </a>
-            <a href="mailto:hello@example.com" class="channel">
-              <div class="channel-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.6"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <strong>Email</strong>
-                <span>hello@example.com</span>
-              </div>
-            </a>
+
           </div>
         </div>
 
@@ -1800,8 +1792,8 @@ button, input, textarea { font-family: inherit; }
             <input type="text" id="name" name="name" placeholder="Как к вам обращаться" required>
           </div>
           <div class="field">
-            <label for="contact">Telegram или email</label>
-            <input type="text" id="contact" name="contact" placeholder="@username или email" required>
+            <label for="contact">Telegram</label>
+            <input type="text" id="contact" name="contact" placeholder="@username" required>
           </div>
           <div class="field">
             <label for="message">Задача</label>
@@ -1842,23 +1834,62 @@ if (burger && nav) {
   });
 }
 
+// ——— Telegram: вставь свои данные ———
+// 1. Создай бота через @BotFather → получи TOKEN
+// 2. Напиши боту /start
+// 3. Узнай свой chat_id: открой https://api.telegram.org/bot<TOKEN>/getUpdates
+const TG_BOT_TOKEN = '8876712023:AAGG54CDTjVH7kLjs7mh5nb1nJmHo_3Umxw';
+const TG_CHAT_ID = '8686442131';
+
 const form = document.getElementById('contactForm');
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
     const original = btn.innerHTML;
-    btn.innerHTML = 'Отправлено ✓';
+    btn.innerHTML = 'Отправка…';
     btn.disabled = true;
-    btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
-    btn.style.boxShadow = '0 4px 24px rgba(52, 211, 153, 0.35)';
-    setTimeout(() => {
+
+    const name = document.getElementById('name').value.trim();
+    const contact = document.getElementById('contact').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    const text = `🆕 Новая заявка с Siteqlo\n\n👤 Имя: ${name}\n📱 Telegram: ${contact}\n\n💬 Задача:\n${message}`;
+
+    let ok = false;
+    try {
+      if (TG_BOT_TOKEN !== 'ВСТАВЬ_ТОКЕН_БОТА' && TG_CHAT_ID !== 'ВСТАВЬ_СВОЙ_CHAT_ID') {
+        const res = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: TG_CHAT_ID, text })
+        });
+        ok = res.ok;
+      } else {
+        // Токен не настроен — демо-режим
+        console.warn('Telegram бот не настроен. Вставь TOKEN и CHAT_ID в script.');
+        ok = true;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    if (ok) {
+      btn.innerHTML = 'Отправлено ✓';
+      btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+      btn.style.boxShadow = '0 4px 24px rgba(52, 211, 153, 0.35)';
       form.reset();
-      btn.innerHTML = original;
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.boxShadow = '';
+      }, 2800);
+    } else {
+      btn.innerHTML = 'Ошибка — напишите в TG';
       btn.disabled = false;
-      btn.style.background = '';
-      btn.style.boxShadow = '';
-    }, 2800);
+      setTimeout(() => { btn.innerHTML = original; }, 3000);
+    }
   });
 }
 
