@@ -1819,6 +1819,7 @@ button, input, textarea { font-family: inherit; }
     </div>
   </footer>
 
+
   <script>
 const burger = document.getElementById('burger');
 const nav = document.getElementById('nav');
@@ -1844,7 +1845,7 @@ const TG_CHAT_ID = '8686442131';
 let formSending = false;
 const form = document.getElementById('contactForm');
 if (form) {
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (formSending) return;
@@ -1866,17 +1867,10 @@ if (form) {
       return;
     }
 
-    const text = `🆕 Новая заявка с Siteqlo\n\n👤 Имя: ${name}\n📱 Telegram: ${contact}\n\n💬 Задача:\n${message}`;
-    const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${encodeURIComponent(TG_CHAT_ID)}&text=${encodeURIComponent(text)}`;
-
-    // Браузер блокирует POST к Telegram (CORS).
-    // GET через Image доходит до API без CORS-ошибки.
-    await new Promise((resolve) => {
-      const img = new Image();
-      img.onload = img.onerror = () => resolve();
-      img.src = url;
-      setTimeout(resolve, 2500);
-    });
+    // Открываем Telegram с готовым текстом (100% работает на GitHub Pages)
+    const plain = 'Заявка с Siteqlo\n\nИмя: ' + name + '\nTelegram: ' + contact + '\n\nЗадача:\n' + message;
+    const tgUrl = 'https://t.me/Siteqlo?text=' + encodeURIComponent(plain);
+    window.open(tgUrl, '_blank');
 
     btn.innerHTML = 'Отправлено ✓';
     btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
@@ -1888,7 +1882,7 @@ if (form) {
       btn.style.background = '';
       btn.style.boxShadow = '';
       formSending = false;
-    }, 3000);
+    }, 2500);
   });
 }
 
