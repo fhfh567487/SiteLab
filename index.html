@@ -1786,24 +1786,12 @@ button, input, textarea { font-family: inherit; }
           </div>
         </div>
 
-        <form class="contact-form" id="contactForm">
-          <div class="field">
-            <label for="name">Имя</label>
-            <input type="text" id="name" name="name" placeholder="Как к вам обращаться" required>
-          </div>
-          <div class="field">
-            <label for="contact">Telegram</label>
-            <input type="text" id="contact" name="contact" placeholder="@username" required>
-          </div>
-          <div class="field">
-            <label for="message">Задача</label>
-            <textarea id="message" name="message" rows="4" placeholder="Кратко опишите, что нужно сделать" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">
-            Отправить заявку
-          </button>
-          <p class="form-note">Данные используются только для связи по проекту</p>
-        </form>
+        <div class="contact-form" style="text-align:center;">
+          <p style="color:var(--text-secondary);margin-bottom:20px;font-size:1rem;">Напишите в Telegram — отвечу быстро</p>
+          <a href="https://t.me/Siteqlo" class="btn btn-primary btn-block" target="_blank" rel="noopener">
+            Написать в Telegram
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -1841,31 +1829,6 @@ if (burger && nav) {
 // 3. Узнай свой chat_id: открой https://api.telegram.org/bot<TOKEN>/getUpdates
 const TG_BOT_TOKEN = '8876712023:AAGG54CDTjVH7kLjs7mh5nb1nJmHo_3Umxw';
 const TG_CHAT_ID = '8686442131';
-
-let formSending = false;
-const form = document.getElementById('contactForm');
-if (form) {
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (formSending) return;
-
-    var name = document.getElementById('name').value.trim();
-    var contact = document.getElementById('contact').value.trim();
-    var message = document.getElementById('message').value.trim();
-    if (!name || !contact || !message) return;
-
-    formSending = true;
-    var btn = form.querySelector('button[type="submit"]');
-    btn.innerHTML = 'Открываю Telegram…';
-    btn.disabled = true;
-
-    var plain = 'Заявка с Siteqlo\n\nИмя: ' + name + '\nTelegram: ' + contact + '\n\nЗадача:\n' + message;
-    var url = 'https://t.me/Siteqlo?text=' + encodeURIComponent(plain);
-
-    // location.href не блокируется на телефонах (в отличие от window.open)
-    window.location.href = url;
-  });
-}
 
 // Scroll reveal
 const revealEls = document.querySelectorAll('.section-head, .timeline-item, .adv-card, .stack-card, .service-card, .portfolio-card, .price-card, .review-card, .faq-item, .process-summary');
