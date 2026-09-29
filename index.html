@@ -1932,7 +1932,7 @@ function renderReviews() {
     article.className = 'review-card reveal visible';
     article.innerHTML = `
       <div class="review-stars">${starsHtml(r.rating)}</div>
-      <p class="review-text">«${escapeHtml(r.text)}»</p>
+      <p class="review-text">${escapeHtml(r.text)}</p>
       <div class="review-author">
         <div class="review-avatar">${avatarLetter(r.name)}</div>
         <div>
