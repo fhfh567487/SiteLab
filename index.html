@@ -1845,44 +1845,25 @@ const TG_CHAT_ID = '8686442131';
 let formSending = false;
 const form = document.getElementById('contactForm');
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    e.stopPropagation();
     if (formSending) return;
-    formSending = true;
 
-    const btn = form.querySelector('button[type="submit"]');
-    const original = btn.innerHTML;
-    btn.innerHTML = 'Отправка…';
+    var name = document.getElementById('name').value.trim();
+    var contact = document.getElementById('contact').value.trim();
+    var message = document.getElementById('message').value.trim();
+    if (!name || !contact || !message) return;
+
+    formSending = true;
+    var btn = form.querySelector('button[type="submit"]');
+    btn.innerHTML = 'Открываю Telegram…';
     btn.disabled = true;
 
-    const name = document.getElementById('name').value.trim();
-    const contact = document.getElementById('contact').value.trim();
-    const message = document.getElementById('message').value.trim();
+    var plain = 'Заявка с Siteqlo\n\nИмя: ' + name + '\nTelegram: ' + contact + '\n\nЗадача:\n' + message;
+    var url = 'https://t.me/Siteqlo?text=' + encodeURIComponent(plain);
 
-    if (!name || !contact || !message) {
-      formSending = false;
-      btn.innerHTML = original;
-      btn.disabled = false;
-      return;
-    }
-
-    // Открываем Telegram с готовым текстом (100% работает на GitHub Pages)
-    const plain = 'Заявка с Siteqlo\n\nИмя: ' + name + '\nTelegram: ' + contact + '\n\nЗадача:\n' + message;
-    const tgUrl = 'https://t.me/Siteqlo?text=' + encodeURIComponent(plain);
-    window.open(tgUrl, '_blank');
-
-    btn.innerHTML = 'Отправлено ✓';
-    btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
-    btn.style.boxShadow = '0 4px 24px rgba(52, 211, 153, 0.35)';
-    form.reset();
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.disabled = false;
-      btn.style.background = '';
-      btn.style.boxShadow = '';
-      formSending = false;
-    }, 2500);
+    // location.href не блокируется на телефонах (в отличие от window.open)
+    window.location.href = url;
   });
 }
 
