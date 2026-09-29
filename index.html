@@ -1841,10 +1841,15 @@ if (burger && nav) {
 const TG_BOT_TOKEN = '8876712023:AAGG54CDTjVH7kLjs7mh5nb1nJmHo_3Umxw';
 const TG_CHAT_ID = '8686442131';
 
+let formSending = false;
 const form = document.getElementById('contactForm');
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    if (formSending) return;
+    formSending = true;
+
     const btn = form.querySelector('button[type="submit"]');
     const original = btn.innerHTML;
     btn.innerHTML = 'Отправка…';
@@ -1854,22 +1859,23 @@ if (form) {
     const contact = document.getElementById('contact').value.trim();
     const message = document.getElementById('message').value.trim();
 
+    if (!name || !contact || !message) {
+      formSending = false;
+      btn.innerHTML = original;
+      btn.disabled = false;
+      return;
+    }
+
     const text = `🆕 Новая заявка с Siteqlo\n\n👤 Имя: ${name}\n📱 Telegram: ${contact}\n\n💬 Задача:\n${message}`;
 
     let ok = false;
     try {
-      if (TG_BOT_TOKEN !== 'ВСТАВЬ_ТОКЕН_БОТА' && TG_CHAT_ID !== 'ВСТАВЬ_СВОЙ_CHAT_ID') {
-        const res = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: TG_CHAT_ID, text })
-        });
-        ok = res.ok;
-      } else {
-        // Токен не настроен — демо-режим
-        console.warn('Telegram бот не настроен. Вставь TOKEN и CHAT_ID в script.');
-        ok = true;
-      }
+      const res = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT_ID, text })
+      });
+      ok = res.ok;
     } catch (err) {
       console.error(err);
     }
@@ -1884,10 +1890,12 @@ if (form) {
         btn.disabled = false;
         btn.style.background = '';
         btn.style.boxShadow = '';
-      }, 2800);
+        formSending = false;
+      }, 3000);
     } else {
       btn.innerHTML = 'Ошибка — напишите в TG';
       btn.disabled = false;
+      formSending = false;
       setTimeout(() => { btn.innerHTML = original; }, 3000);
     }
   });
